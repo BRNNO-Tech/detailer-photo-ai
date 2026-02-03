@@ -1,0 +1,7 @@
+{
+  "name": "AI Photo Assistant Pro",
+  "description": "A high-end, AI-powered photo enhancement and social media packaging suite using Gemini's latest vision and creative models.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

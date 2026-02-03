@@ -1,0 +1,4 @@
+/* App base styles - Tailwind handles most styling via index.html */
+body {
+  font-family: 'Inter', sans-serif;
+}
