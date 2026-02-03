@@ -928,6 +928,7 @@ ${currentProject.socialData.postingTimes.join(', ')}
 
       {step === AppStep.SELECT_SERVICE && (
         <div className="max-w-4xl mx-auto space-y-12 animate-fadeIn">
+          <button onClick={reset} className="text-sm font-black uppercase text-slate-400 hover:text-slate-600 tracking-widest">← Back</button>
           <div className="text-center space-y-4">
             <h2 className="text-4xl font-black text-slate-900 uppercase italic tracking-tighter">Choose Your Service</h2>
             <p className="text-slate-500 font-medium">Select a job to load its custom photo checklist.</p>
@@ -961,6 +962,7 @@ ${currentProject.socialData.postingTimes.join(', ')}
 
       {step === AppStep.CHECKLIST && selectedService && (
         <div className="max-w-xl mx-auto space-y-10 animate-fadeIn">
+          <button onClick={() => setStep(AppStep.SELECT_SERVICE)} className="text-sm font-black uppercase text-slate-400 hover:text-slate-600 tracking-widest">← Back</button>
           <h2 className="text-3xl font-black text-slate-900 italic uppercase tracking-tighter text-center">Photo Checklist: {selectedService.name}</h2>
           <div className="bg-white rounded-[50px] p-10 border border-slate-200/60 shadow-2xl space-y-4">
             {selectedService.checklist.map((item, i) => (
@@ -990,6 +992,7 @@ ${currentProject.socialData.postingTimes.join(', ')}
 
       {step === AppStep.UPLOAD && (
         <div className="max-w-2xl mx-auto space-y-12 animate-fadeIn">
+          <button onClick={() => setStep(AppStep.CHECKLIST)} className="text-sm font-black uppercase text-slate-400 hover:text-slate-600 tracking-widest">← Back</button>
           <h2 className="text-4xl font-black text-slate-900 italic uppercase tracking-tighter text-center">Upload Photos</h2>
           <div 
             onClick={() => !isLoading && fileInputRef.current?.click()} 
@@ -1087,6 +1090,7 @@ ${currentProject.socialData.postingTimes.join(', ')}
 
       {step === AppStep.BEFORE_AFTER && (
         <div className="space-y-10 animate-fadeIn">
+          <button onClick={reset} className="text-sm font-black uppercase text-slate-400 hover:text-slate-600 tracking-widest">← Back</button>
           <h2 className="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">Confirm Pairs</h2>
           <div className="grid grid-cols-1 gap-10">
             {pairs.map((pair) => (
@@ -1185,6 +1189,7 @@ ${currentProject.socialData.postingTimes.join(', ')}
 
       {step === AppStep.VIDEO_LAB && (
         <div className="max-w-4xl mx-auto space-y-12 animate-fadeIn pb-24">
+          <button onClick={reset} className="text-sm font-black uppercase text-slate-400 hover:text-slate-600 tracking-widest">← Back</button>
           <div className="text-center space-y-4">
              <h2 className="text-5xl font-black text-slate-900 tracking-tighter uppercase italic">AI Video Studio</h2>
              <p className="text-slate-500 font-medium text-lg">Select a generation category to begin.</p>
@@ -1298,6 +1303,7 @@ ${currentProject.socialData.postingTimes.join(', ')}
 
       {step === AppStep.VIDEO_EDIT && currentProject && currentProject.generatedVideoUrl && (
         <div className="max-w-6xl mx-auto space-y-12 animate-fadeIn pb-20">
+          <button onClick={() => setStep(AppStep.VIDEO_LAB)} className="text-sm font-black uppercase text-slate-400 hover:text-slate-600 tracking-widest">← Back</button>
           <div className="text-center space-y-2">
             <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase italic text-center">Video Lab Edit</h2>
             {currentProject.videoCreative && <p className="text-blue-600 font-bold uppercase text-xs tracking-widest">Creative Hook: "{currentProject.videoCreative.hook}"</p>}
@@ -1401,6 +1407,7 @@ ${currentProject.socialData.postingTimes.join(', ')}
 
       {step === AppStep.EXPORT && currentProject && (
         <div className="max-w-xl mx-auto py-10 flex flex-col items-center space-y-12 animate-fadeIn text-center">
+          <button onClick={reset} className="self-start text-sm font-black uppercase text-slate-400 hover:text-slate-600 tracking-widest">← Back</button>
           <div className="w-32 h-32 bg-green-50 text-green-500 rounded-full flex items-center justify-center text-6xl shadow-inner border-2 border-green-100">✓</div>
           <div className="space-y-4">
             <h2 className="text-5xl font-black text-slate-900 italic tracking-tighter uppercase">Finished!</h2>
@@ -1460,6 +1467,7 @@ ${currentProject.socialData.postingTimes.join(', ')}
 
       {step === AppStep.SETTINGS && (
         <div className="max-w-2xl mx-auto space-y-12 animate-fadeIn">
+          <button onClick={reset} className="text-sm font-black uppercase text-slate-400 hover:text-slate-600 tracking-widest">← Back</button>
           <h2 className="text-3xl font-black text-slate-900 italic uppercase tracking-tighter">Settings</h2>
           <div className="bg-white rounded-[40px] border p-8 space-y-8">
              <div className="space-y-2">

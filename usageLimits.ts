@@ -7,7 +7,7 @@ const STORAGE_USER_ID = 'detailerPro_userId';
 const STORAGE_USAGE = 'detailerPro_usage';
 
 export const FREE_PROJECTS_PER_MONTH = 3;
-export const FREE_AI_CALLS_PER_MONTH = 5;
+export const FREE_AI_CALLS_PER_MONTH = 15;
 export const FREE_GALLERY_SIZE = 10;
 
 export interface Usage {
