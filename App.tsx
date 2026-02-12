@@ -254,6 +254,9 @@ const App: React.FC = () => {
     );
   };
 
+  // Safe canvas pixel limit for Safari/mobile (e.g. ~16.7M)
+  const MAX_CANVAS_PIXELS = 16e6;
+
   // Compress image before upload
   const compressImage = (file: File, maxWidth: number = 1920, quality: number = 0.85): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -265,10 +268,17 @@ const App: React.FC = () => {
           let width = img.width;
           let height = img.height;
 
-          // Calculate new dimensions
+          // Cap by max width first
           if (width > maxWidth) {
             height = (height * maxWidth) / width;
             width = maxWidth;
+          }
+
+          // Cap total pixels for Safari/mobile canvas limits
+          if (width * height > MAX_CANVAS_PIXELS) {
+            const scale = Math.sqrt(MAX_CANVAS_PIXELS / (width * height));
+            width = Math.floor(width * scale);
+            height = Math.floor(height * scale);
           }
 
           canvas.width = width;
@@ -322,21 +332,35 @@ const App: React.FC = () => {
 
     if (validFiles.length === 0) return;
 
-    // Process and compress images
+    // Process and compress images sequentially (reduces OOM on mobile)
     setIsLoading(true);
-    try {
-      const compressedImages = await Promise.all(
-        validFiles.map(file => compressImage(file))
-      );
-      
+    const compressedImages: string[] = [];
+    let failedCount = 0;
+
+    for (const file of validFiles) {
+      try {
+        const dataUrl = await compressImage(file);
+        compressedImages.push(dataUrl);
+      } catch (err) {
+        console.error('Error compressing image:', file.name, err);
+        failedCount += 1;
+      }
+    }
+
+    if (compressedImages.length > 0) {
       setUploadedFiles(prev => [...prev, ...compressedImages]);
       triggerToast();
-    } catch (error) {
-      console.error('Error compressing images:', error);
-      triggerErrorToast('Error processing images. Please try again.');
-    } finally {
-      setIsLoading(false);
     }
+
+    if (failedCount > 0) {
+      const message =
+        compressedImages.length > 0
+          ? `${compressedImages.length} photo(s) added; ${failedCount} could not be processed. Try smaller images or JPG/PNG.`
+          : "Couldn't process one or more photos. Try smaller images or JPG/PNG.";
+      triggerErrorToast(message);
+    }
+
+    setIsLoading(false);
   };
 
   const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
